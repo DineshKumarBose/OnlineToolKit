@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="navbar">
+  <a class="active menu" href="#home" id='home'>Home</a>
+  <a href="#news">News</a>
+  <div class="dropdown">
+    <button class="dropbtn">Tools 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#" class="menu" id="compare">Compare List</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div> 
+</div>
+
+<div style="padding-left:16px" class='pagediv' id='divhome'>
+  <h2>Compare List</h2>
+  <p>You can compare two list here.</p>
+  <div>
+	  <textarea>
+	  </textarea>
+	  <textarea >
+	  </textarea>
+  </div>
+  <span>
+	  <button class="button">Compare</button>
+  </span>
+</div>
+
+<div style="padding-left:16px; display:none" class='pagediv' id='divcompare'>
+  
+</div>
+
+</body>
+<script>
+$(document).ready(function(){
+	$(".menu").click(function(){
+		var previoiusmenu = $(".active").attr('id');
+		$("#div"+previoiusmenu).hide();
+		var currentmenu = $(this).attr('id');
+		$("#div"+currentmenu).show();
+});
+});
+</script>
+</html>
