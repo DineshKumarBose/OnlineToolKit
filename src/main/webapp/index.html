@@ -4,49 +4,171 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 </head>
 <body>
 <div class="navbar">
   <a class="active menu" href="#home" id='home'>Home</a>
-  <a href="#news">News</a>
+  <a href="#news" class="menu">News</a>
   <div class="dropdown">
     <button class="dropbtn">Tools 
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
-      <a href="#" class="menu" id="compare">Compare List</a>
+      <a href="#comparetool" class="menu" id="comparetool">Compare List</a>
     </div>
   </div> 
 </div>
 
-<div style="padding-left:16px" class='pagediv' id='divhome'>
+<div style="padding-left:16px; display:none" class='container pagediv' id='divcomparetool'>
   <h2>Compare List</h2>
   <p>You can compare two list here.</p>
-  <div>
-	  <textarea>
-	  </textarea>
-	  <textarea >
-	  </textarea>
-  </div>
+ <table>
+		<tbody><tr align="CENTER" center="">
+		<td><font color="FF0000"><b>List 1 (one per line):</b></font></td>
+		<td><font color="FF0000"><b>List 1 (one per line):</b></font></td>
+		</tr>
+	<tr align="CENTER" center="">
+		<td><textarea name="list1" id="list1" rows="10" cols="20"></textarea></td>
+		<td><textarea name="list2" id="list2" rows="10" cols="20"></textarea></td>
+	</tr>
+</tbody></table>
+  
   <span>
-	  <button class="button">Compare</button>
+	  <button class="button" id="comparebutton">Compare</button>
   </span>
 </div>
 
-<div style="padding-left:16px; display:none" class='pagediv' id='divcompare'>
-  
+<div style="padding-left:16px; display:none" class='pagediv' id='divcompareresult'>
+  <h2>Comparison of two lists</h2>
+  <div>
+  <table>
+	<tr align="CENTER" center="">
+		<td>List 1 :<br><textarea name="resultlist1" id="resultlist1" rows="10" cols="20"></textarea></td>
+		<td>List 2 :<br><textarea name="resultlist2" id="resultlist2" rows="10" cols="20"></textarea></td>
+		<td>Only in 1 :<br><textarea name="onlylist1" id="onlylist1" rows="10" cols="20"></textarea></td>
+		</tr>
+		<tr align="CENTER">
+		<td>Only in 2 :<br><textarea name="onlylist2" id="onlylist2" rows="10" cols="20"></textarea></td>
+		<td>1 or 2 :<br><textarea name="oneortwo" id="oneortwo" rows="10" cols="20"></textarea></td>
+		<td>1 and 2 :<br><textarea name="commonlist" id="commonlist" rows="10" cols="20"></textarea></td>
+	</tr>
+</tbody></table>
+  </div>
+</div>
+
+<div style="padding-left:16px; display:none" class='pagediv' id='divhome'>
+  <h2>Welcome to Development tools</h2>
 </div>
 
 </body>
+<style>
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: linear-gradient(45deg, #49a09d, #5f2c82);
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: #55608f;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
+</style>
 <script>
 $(document).ready(function(){
+	$('textarea').each(function(){
+        $(this).val($(this).val().trim());
+    }
+	);
 	$(".menu").click(function(){
+		debugger;
 		var previoiusmenu = $(".active").attr('id');
+		$(".active").removeClass("active");
 		$("#div"+previoiusmenu).hide();
 		var currentmenu = $(this).attr('id');
+		$(this).addClass("active");
 		$("#div"+currentmenu).show();
 });
+	$("#comparebutton").click(function() {
+		var list1 = $("#list1").val();
+		var list2 = $("#list2").val();
+		var inputJson = {};
+		inputJson.list1 = list1;
+		inputJson.list2 = list2;
+		var JSONString = JSON.stringify(inputJson);
+		$.ajax({
+			url: "rest/comparelist",
+			type: "POST",
+			data : JSONString,
+			contentType: 'application/json',
+			success: function(data) {
+				$("#divcomparetool").hide();
+				$('#divcompareresult').show();
+				for(key in data) {
+					$("#"+key).val(data[key]);
+				}
+			},
+			error: function(jqXHR, exception) {
+				$('#errorMsg').html("Validation ERROR : "+jqXHR.responseText);
+				$('#outputJson').html("");
+			}
+		})
+	});
 });
 </script>
 </html>

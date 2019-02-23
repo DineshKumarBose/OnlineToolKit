@@ -16,18 +16,6 @@ body {
   padding: 14px 16px;
   text-decoration: none;
 }
-
-textarea {
-  width: 15%;
-  height: 350px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  resize: none;
-}
-
 .dropdown {
   float: left;
   overflow: hidden;
@@ -51,7 +39,7 @@ textarea {
   padding: 8px 32px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: block;
   font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
@@ -88,4 +76,5 @@ textarea {
 .dropdown:hover .dropdown-content {
   display: block;
 }
+label {display:initial;}
 </style>
