@@ -6,7 +6,7 @@
  <meta name="keywords" content="compare list, find duplicate, remove duplicates, leafsoft,comparelist,merge list,combine list">
  <meta name="author" content="Dinesh Kumar">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --> 
@@ -110,6 +110,7 @@ $(document).ready(function(){
 		var inputJson = {};
 		inputJson.list1 = list1;
 		inputJson.list2 = list2;
+		inputJson.case_insensitive = case_insensitive;
 		var JSONString = JSON.stringify(inputJson);
 		$.ajax({
 			url: "rest/comparelist",
@@ -135,7 +136,6 @@ $(document).ready(function(){
 	
 });
 function loadhash() {
-	debugger;
 	var hash = location.hash.substr(1);
 	if(hash !== undefined && hash !== "") {
 		setActiveTab(hash);
