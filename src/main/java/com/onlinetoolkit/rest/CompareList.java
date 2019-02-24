@@ -28,6 +28,10 @@ public class CompareList {
 		JSONObject json = new JSONObject(jsonString);
 		String list1 = json.getString("list1");
 		String list2 = json.getString("list2");
+		if(json.has("case_insensitive") && json.getBoolean("case_insensitive")) {
+			list1 = list1.toLowerCase();
+			list2 = list2.toLowerCase();
+		}
 		responseJson.put("resultlist1", list1);
 		responseJson.put("resultlist2", list2);
 		responseJson.put("onlylist1", UtilMethods.getDiff(list1, list2));

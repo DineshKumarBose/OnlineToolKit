@@ -2,13 +2,23 @@
 <html>
 <head>
 <title>Online Kit</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Online tool for software users and developers">
+ <meta name="keywords" content="compare list, find duplicate, remove duplicates, leafsoft,comparelist,merge list,combine list">
+ <meta name="author" content="Dinesh Kumar">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+ <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --> 
 </head>
-<body>
+<header>
+<div id="logobox">
+    <a href="#home" id="logo">
+        <img src="images/leafsoft.png" id="leaflogo">
+        </a>
+    </div>  
+</header>
+<body onload="loadhash()">
 <div class="navbar">
   <a class="active menu" href="#home" id='home'>Home</a>
   <a href="#news" class="menu">News</a>
@@ -21,116 +31,62 @@
     </div>
   </div> 
 </div>
-
 <div style="padding-left:16px; display:none" class='container pagediv' id='divcomparetool'>
-  <h2>Compare List</h2>
-  <p>You can compare two list here.</p>
- <table>
+  <h2><b>Compare two lists</b></h2>
+ <table bgcolor="#E6D7D7" width="500" border="" class="">
 		<tbody><tr align="CENTER" center="">
-		<td><font color="FF0000"><b>List 1 (one per line):</b></font></td>
-		<td><font color="FF0000"><b>List 2 (one per line):</b></font></td>
+		<td><b>List 1 (one per line):</b></font></td>
+		<td><b>List 2 (one per line):</b></font></td>
 		</tr>
 	<tr align="CENTER" center="">
 		<td><textarea name="list1" id="list1" rows="10" cols="20"></textarea></td>
 		<td><textarea name="list2" id="list2" rows="10" cols="20"></textarea></td>
 	</tr>
 </tbody></table>
-  
+<br>
+<input type="checkbox" name="case" id="case_checkbox" value="insensitive">
+<font color="FF0000" size="4">Case insensitive</font>
+<br>
+  <br>
   <span>
 	  <button class="button" id="comparebutton">Compare</button>
   </span>
 </div>
-
 <div style="padding-left:16px; display:none" class='pagediv' id='divcompareresult'>
   <h2>Comparison of two lists</h2>
   <div>
-  <table>
+  <table bgcolor="#E6D7D7" width="500" border="1" class="">
 	<tr align="CENTER" center="">
 		<td>List 1 :<br><textarea name="resultlist1" id="resultlist1" rows="10" cols="20"></textarea></td>
-		<td>List 2 :<br><textarea name="resultlist2" id="resultlist2" rows="10" cols="20"></textarea></td>
 		<td>Only in 1 :<br><textarea name="onlylist1" id="onlylist1" rows="10" cols="20"></textarea></td>
+		<td>1 or 2 :<br><textarea name="oneortwo" id="oneortwo" rows="10" cols="20"></textarea></td>
 		</tr>
 		<tr align="CENTER">
+		<td>List 2 :<br><textarea name="resultlist2" id="resultlist2" rows="10" cols="20"></textarea></td>
 		<td>Only in 2 :<br><textarea name="onlylist2" id="onlylist2" rows="10" cols="20"></textarea></td>
-		<td>1 or 2 :<br><textarea name="oneortwo" id="oneortwo" rows="10" cols="20"></textarea></td>
 		<td>1 and 2 :<br><textarea name="commonlist" id="commonlist" rows="10" cols="20"></textarea></td>
 	</tr>
 </tbody></table>
   </div>
+  <br>
+  <span><b>Notes : </b>Comparisons are <b id="case_display">case-sensitive</b>.<br>
+Duplicate entries are removed from each list before processing<br>
+and all lists are alphabetically ordered. 
+  </span><br><br>
+  <a href="#comparetool" class='anchor' tab='comparetool'>Compare two more lists</a><br><br>
+  <font size="-1" class="">
+	Comments, problems, or questions? &nbsp;
+	<a href="mailto:gbell@wi.mit.edu">dinesh@devutil.xyz</a>
+	</font>
 </div>
 
-<div style="padding-left:16px;" class='pagediv' id='divhome'>
-  <h2>Welcome to Development tools</h2>
+<div style="padding-left:16px; display:none" class='pagediv' id='divhome'>
+  <h2>Welcome</h2>
+  LeafSoft is development center which produce online tools to reduce the users and developers time from day to day activities.<br> Here is our tools which will grow by nature.<br><br>
+  <a href="#comparetool" class='anchor' tab='comparetool'>Compare two more lists</a><br><br>
 </div>
 
 </body>
-<style>
-html,
-body {
-	height: 100%;
-}
-
-body {
-	margin: 0;
-	background: linear-gradient(45deg, #49a09d, #5f2c82);
-	font-family: sans-serif;
-	font-weight: 100;
-}
-
-.container {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-
-table {
-	width: 800px;
-	border-collapse: collapse;
-	overflow: hidden;
-	box-shadow: 0 0 20px rgba(0,0,0,0.1);
-}
-
-th,
-td {
-	padding: 15px;
-	background-color: rgba(255,255,255,0.2);
-	color: #fff;
-}
-
-th {
-	text-align: left;
-}
-
-thead {
-	th {
-		background-color: #55608f;
-	}
-}
-
-tbody {
-	tr {
-		&:hover {
-			background-color: rgba(255,255,255,0.3);
-		}
-	}
-	td {
-		position: relative;
-		&:hover {
-			&:before {
-				content: "";
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: -9999px;
-				bottom: -9999px;
-				background-color: rgba(255,255,255,0.2);
-				z-index: -1;
-			}
-		}
-	}
-}
-</style>
 <script>
 $(document).ready(function(){
 	$('textarea').each(function(){
@@ -138,17 +94,19 @@ $(document).ready(function(){
     }
 	);
 	$(".menu").click(function(){
-		$(".pagediv").hide();
-		var previoiusmenu = $(".active").attr('id');
-		$(".active").removeClass("active");
-		$("#div"+previoiusmenu).hide();
 		var currentmenu = $(this).attr('id');
-		$(this).addClass("active");
-		$("#div"+currentmenu).show();
+		setActiveTab(currentmenu);
+	});
+	
+	$(".anchor").click(function(){
+		var currentmenu = $(this).attr('tab');
+		setActiveTab(currentmenu);
 });
+	
 	$("#comparebutton").click(function() {
 		var list1 = $("#list1").val();
 		var list2 = $("#list2").val();
+		var case_insensitive = $('#case_checkbox').prop('checked');
 		var inputJson = {};
 		inputJson.list1 = list1;
 		inputJson.list2 = list2;
@@ -161,6 +119,9 @@ $(document).ready(function(){
 			success: function(data) {
 				$("#divcomparetool").hide();
 				$('#divcompareresult').show();
+				if(case_insensitive) {
+					$("#case_display").html("case-insensitive");
+				}
 				for(key in data) {
 					$("#"+key).val(data[key]);
 				}
@@ -171,18 +132,27 @@ $(document).ready(function(){
 			}
 		})
 	});
+	
 });
-	// Get page title
-  	var pageTitle = $("title").text();
-
-	// Change page title on blur
-	$(window).blur(function() {
-	  $("title").text("Don't forget to read this...");
-	});
-
-	// Change page title back on focus
-	$(window).focus(function() {
-	  $("title").text(pageTitle);
-	});
+function loadhash() {
+	debugger;
+	var hash = location.hash.substr(1);
+	if(hash !== undefined && hash !== "") {
+		setActiveTab(hash);
+	} else {
+		setActiveTab('home');
+	}
+}
+function setActiveTab(tabid) {
+	$(".pagediv").hide();
+	var previoiusmenu = $(".active").attr('id');
+	$(".active").removeClass("active");
+	$("#div"+previoiusmenu).hide();
+	var currentmenu = tabid;
+	$("#"+tabid).addClass("active");
+	$("#div"+currentmenu).show();
+	$("textarea").val("");
+	
+}
 </script>
 </html>
