@@ -9,6 +9,10 @@
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
+<link rel="stylesheet" href="css/jsonview.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="js/jsonview.js"></script>
+
  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --> 
 </head>
 <header>
@@ -93,8 +97,8 @@ and all lists are alphabetically ordered.
 		<tbody>
 	<tr align="CENTER" center="">
 		<td><textarea name="inputjson" id="inputjson" rows="32" cols="60"></textarea></td>
-		<td><button class="button" id="formatjson">Format</button><br><select class="span11" id="nojsontab"> <option value="0" selected="selected">Default Tab Space</option> <option value="2">2 Tab Space</option> <option value="3">3 Tab Space</option> <option value="4">4 Tab Space</option> </select><br><br><button class="button" id="minifyjson">Minify</button><br><button class="button" id="jsontocsv">Get CSV</button></td>
-		<td><textarea name="outputjson" id="outputjson" rows="32" cols="65"></textarea></td>
+		<td><button class="button" id="treeview">Tree View</button><br><button class="button" id="formatjson">Format</button><br><select class="span11" id="nojsontab"> <option value="0" selected="selected">Default Tab Space</option> <option value="2">2 Tab Space</option> <option value="3">3 Tab Space</option> <option value="4">4 Tab Space</option> </select><br><br><button class="button" id="minifyjson">Minify</button><br><button class="button" id="jsontocsv">Get CSV</button></td>
+		<td id="output_col"><textarea name="outputjson" id="outputjson" rows="32" cols="60"></textarea></td>
 	</tr>
 </tbody></table>
 </div>
@@ -162,7 +166,7 @@ $(document).ready(function(){
 			contentType: 'application/json',
 			success: function(data) {
 				var notab = parseInt($("#nojsontab").val());
-				$('#outputjson').val(JSON.stringify(data, null, notab));
+				$('#outputjson').html(JSON.stringify(data, null, notab));
 			},
 			error: function(jqXHR, exception) {
 				$('#outputjson').val(jqXHR.responseText);
@@ -177,7 +181,7 @@ $(document).ready(function(){
 			data : inputJson,
 			contentType: 'application/json',
 			success: function(data) {
-				$('#outputjson').val(JSON.stringify(data));
+				$('#outputjson').html(JSON.stringify(data));
 			},
 			error: function(jqXHR, exception) {
 				$('#outputjson').val(jqXHR.responseText);
@@ -185,7 +189,16 @@ $(document).ready(function(){
 		})
 	});
 	
-	$('button').click(function(){
+	$('#treeview').click(function(){
+        var data = $('#inputjson').val();
+        if(data == '')
+            return;
+        $('#output_col').html('<td><div class="root"></div></td>');
+        var target = '.root';
+        jsonView.format(data, target);
+    });
+	
+	$('#jsontocsv').click(function(){
         var data = $('#inputjson').val();
         if(data == '')
             return;
