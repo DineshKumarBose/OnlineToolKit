@@ -131,6 +131,9 @@ $(document).ready(function(){
 		var list1 = $("#list1").val();
 		var list2 = $("#list2").val();
 		var case_insensitive = $('#case_checkbox').prop('checked');
+		if(list1 == '' && list2 == '') {
+			return;
+		}
 		var inputJson = {};
 		inputJson.list1 = list1;
 		inputJson.list2 = list2;
