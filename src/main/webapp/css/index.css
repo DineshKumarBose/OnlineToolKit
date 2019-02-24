@@ -45,6 +45,15 @@ body {
   cursor: pointer;
 }
 
+.texteditor textarea{
+    background: url(../images/2cOaJ.png);
+background-attachment: local;
+background-repeat: no-repeat;
+padding-left: 35px;
+padding-top: 10px;
+    border-color:#383333;
+}
+
 .button1 {background-color: #4CAF50;} /* Green */
 
 .navbar a:hover, .dropdown:hover .dropbtn {

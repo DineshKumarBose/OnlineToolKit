@@ -28,12 +28,13 @@
     </button>
     <div class="dropdown-content">
       <a href="#comparetool" class="menu" id="comparetool">Compare List</a>
+      <a href="#jsonviewer" class="menu" id="jsonviewer">JSON Viewer</a>
     </div>
   </div> 
 </div>
-<div style="padding-left:16px; display:none" class='container pagediv' id='divcomparetool'>
+<div style="padding-left:16px; display:none" class='container pagediv texteditor' id='divcomparetool'>
   <h2><b>Compare two lists</b></h2>
- <table bgcolor="#E6D7D7" width="500" border="" class="">
+ <table border="1" class="">
 		<tbody><tr align="CENTER" center="">
 		<td><b>List 1 (one per line):</b></font></td>
 		<td><b>List 2 (one per line):</b></font></td>
@@ -52,10 +53,10 @@
 	  <button class="button" id="comparebutton">Compare</button>
   </span>
 </div>
-<div style="padding-left:16px; display:none" class='pagediv' id='divcompareresult'>
+<div style="padding-left:16px; display:none" class='pagediv texteditor' id='divcompareresult'>
   <h2>Comparison of two lists</h2>
   <div>
-  <table bgcolor="#E6D7D7" width="500" border="1" class="">
+  <table border="1" class="">
 	<tr align="CENTER" center="">
 		<td>List 1 :<br><textarea name="resultlist1" id="resultlist1" rows="10" cols="20"></textarea></td>
 		<td>Only in 1 :<br><textarea name="onlylist1" id="onlylist1" rows="10" cols="20"></textarea></td>
@@ -79,11 +80,29 @@ and all lists are alphabetically ordered.
 	<a href="mailto:gbell@wi.mit.edu">dinesh@devutil.xyz</a>
 	</font>
 </div>
-
+<div style="padding-left:16px; display:none" class='pagediv texteditor' id='divjsonviewer'>
+  <h2><b>JSON Viewer</b></h2>
+  <table  border="1" class="">
+  <thead>
+		<tr align="CENTER" center="">
+		<th><b>Input Json:</b></font></th>
+		<th><b>Options</b></font></th>
+		<th><b>Result Json:</b></font></th>
+		</tr>
+		</thead>
+		<tbody>
+	<tr align="CENTER" center="">
+		<td><textarea name="inputjson" id="inputjson" rows="32" cols="60"></textarea></td>
+		<td><button class="button" id="formatjson">Format</button><br><button class="button" id="minifyjson">Minify</button><br><select class="span11" id="nojsontab"> <option value="0" selected="selected">Default Tab Space</option> <option value="2">2 Tab Space</option> <option value="3">3 Tab Space</option> <option value="4">4 Tab Space</option> </select></td>
+		<td><textarea name="outputjson" id="outputjson" rows="32" cols="65"></textarea></td>
+	</tr>
+</tbody></table>
+</div>
 <div style="padding-left:16px; display:none" class='pagediv' id='divhome'>
   <h2>Welcome</h2>
   LeafSoft is development center which produce online tools to reduce the users and developers time from day to day activities.<br> Here is our tools which will grow by nature.<br><br>
   <a href="#comparetool" class='anchor' tab='comparetool'>Compare two more lists</a><br><br>
+  <a href="#jsonviewer" class='anchor' tab='jsonviewer'>JSON Viewer</a><br><br>
 </div>
 
 </body>
@@ -133,6 +152,39 @@ $(document).ready(function(){
 			}
 		})
 	});
+	
+	$('body').on('click','#formatjson',function(){
+		var inputJson = 	$('#inputjson').val();
+		$.ajax({
+			url: "rest/jsonformatter",
+			type: "POST",
+			data : inputJson,
+			contentType: 'application/json',
+			success: function(data) {
+				var notab = parseInt($("#nojsontab").val());
+				$('#outputjson').val(JSON.stringify(data, null, notab));
+			},
+			error: function(jqXHR, exception) {
+				$('#outputjson').val(jqXHR.responseText);
+			}
+		})
+	});
+	$('body').on('click','#minifyjson',function(){
+		var inputJson = 	$('#inputjson').val();
+		$.ajax({
+			url: "rest/jsonformatter",
+			type: "POST",
+			data : inputJson,
+			contentType: 'application/json',
+			success: function(data) {
+				$('#outputjson').val(JSON.stringify(data));
+			},
+			error: function(jqXHR, exception) {
+				$('#outputjson').val(jqXHR.responseText);
+			}
+		})
+	});
+	
 	
 });
 function loadhash() {
