@@ -1,6 +1,46 @@
 <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
+  color : #333333;
+}
+.w15 {
+	width: 40%
+}
+.shadow {
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .5)
+}
+
+.rounded {
+	border-radius: 4px
+}
+
+.col-7 {
+		width: 50.33%
+	}
+
+.timestr {
+	padding: 5px 0;
+	font-size: 1.8em;
+	font-family: monospace
+}
+
+.bgrs {
+	padding: 5px
+}
+
+input
+{
+	color: inherit;
+	font: inherit;
+	padding: .5em;
+	margin: 0 5px 5px 0;
+	border: 1px solid #ccc;
+	box-shadow: inset 0 1px 3px #ddd;
+	border-radius: 4px;
+	display: inline-block;
+	font-size: 100%;
+	line-height: normal;
+	max-width: 100%
 }
 
 .navbar {

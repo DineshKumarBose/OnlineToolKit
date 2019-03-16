@@ -20,11 +20,11 @@ public class JSONFormatter {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON})
-	public Response createTrackInJSON(String test) {
+	public Response createTrackInJSON(String jsonString) {
     	String indented = "";
     	try {
 		ObjectMapper mapper = new ObjectMapper();
-		Object json = mapper.readValue(test, Object.class);
+		Object json = mapper.readValue(jsonString, Object.class);
 		indented = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(json);
     	} catch(Exception e) {
     		LOGGER.log(Level.SEVERE, e.getMessage(), e);

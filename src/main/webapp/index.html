@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Online Kit</title>
-<meta name="google-site-verification" content="I-WxLiI2fh7w4aEmdRcOypd5LwO0oBtdjZY2j2jTmYU" />
+<meta name="google-site-verification" content="KYL-oUXLsTbGuvc1MkS5J1CxekS-z-KQGFSjnZes4sU" />
 <meta name="description" content="Online tool for software users and developers">
  <meta name="keywords" content="compare list, find duplicate, remove duplicates, leafsoft,comparelist,merge list,combine list, jsonviewer, jsontocsv, json validator, json minifier">
  <meta name="author" content="Dinesh Kumar">
@@ -34,6 +34,7 @@
     <div class="dropdown-content">
       <a href="#comparetool" class="menu" id="comparetool">Compare List</a>
       <a href="#jsonviewer" class="menu" id="jsonviewer">JSON Viewer</a>
+      <a href="#dateconverter" class="menu" id="dateconverter">DATE Converter</a>
     </div>
   </div> 
 </div>
@@ -57,6 +58,27 @@
   <span>
 	  <button class="button" id="comparebutton">Compare</button>
   </span>
+</div>
+<div style="padding-left:16px; display:none" class='container pagediv texteditor col-7' id='divdateconverter'>
+<h1>Milliseconds to Date Converter</h1>
+<p>Please enter the <strong>milliseconds</strong> number value to <strong>convert to date</strong> since timestamp or unix epoch.</p>
+<fieldset>
+	<label for="milliseconds">Milliseconds</label>
+	<input type="number" id="milliseconds" name="milliseconds" min="0" max="9999999999999" onclick="this.select();" class="w15" placeholder="Milliseconds (ms)">
+	  <span>
+	  <button class="button" id="convert">Convert To Date</button>
+  	</span>
+</fieldset>
+<br>
+<div class="bgrs shadow rounded center" align="CENTER" title="Milliseconds to date result">
+<span id="dateresult" class="timestr">date time</span></div>
+<small>Date from milliseconds (ms) since timestamp or unix epoch.</small>
+<h2>About Milliseconds to Date Converter</h2>
+<p><strong>Milliseconds to date converter</strong> helps you to find the date and time from a given total number of <strong>milliseconds</strong>.
+This total number of milliseconds is the elapsed milliseconds since <strong>timestamp or unix epoch</strong> counting from 1 January 1970.
+</p>
+<p>Just enter the <em>milliseconds</em> value and press the Convert to Date button to find the date. You can also set the milliseconds value from Now button to the current timestamp milliseconds.</p>
+<p>For example 1471300214792 milliseconds is converted to date as 16 August 2016 01:30:14.</p>
 </div>
 <div style="padding-left:16px; display:none" class='pagediv texteditor' id='divcompareresult'>
   <h2>Comparison of two lists</h2>
@@ -128,77 +150,6 @@ $(document).ready(function(){
 		setActiveTab(currentmenu);
 });
 	
-	$("#comparebutton").click(function() {
-		var list1 = $("#list1").val();
-		var list2 = $("#list2").val();
-		var case_insensitive = $('#case_checkbox').prop('checked');
-		if(list1 == '' && list2 == '') {
-			return;
-		}
-		var inputJson = {};
-		inputJson.list1 = list1;
-		inputJson.list2 = list2;
-		inputJson.case_insensitive = case_insensitive;
-		var JSONString = JSON.stringify(inputJson);
-		$.ajax({
-			url: "rest/comparelist",
-			type: "POST",
-			data : JSONString,
-			contentType: 'application/json',
-			success: function(data) {
-				$("#divcomparetool").hide();
-				$('#divcompareresult').show();
-				if(case_insensitive) {
-					$("#case_display").html("case-insensitive");
-				}
-				for(key in data) {
-					$("#"+key).val(data[key]);
-				}
-			},
-			error: function(jqXHR, exception) {
-				$('#errorMsg').html("Validation ERROR : "+jqXHR.responseText);
-				$('#outputJson').html("");
-			}
-		})
-	});
-	
-	$('body').on('click','#formatjson',function(){
-		var inputJson = $('#inputjson').val();
-		if(inputJson == '')
-            return;
-		$('#output_col').html('<textarea name="outputjson" id="outputjson" rows="32" cols="60"></textarea>');
-		$.ajax({
-			url: "rest/jsonformatter",
-			type: "POST",
-			data : inputJson,
-			contentType: 'application/json',
-			success: function(data) {
-				var notab = parseInt($("#nojsontab").val());
-				$('#outputjson').html(JSON.stringify(data, null, notab));
-			},
-			error: function(jqXHR, exception) {
-				$('#outputjson').val(jqXHR.responseText);
-			}
-		})
-	});
-	$('body').on('click','#minifyjson',function(){
-		var inputJson =  $('#inputjson').val();
-		if(inputJson == '')
-            return;
-		$('#output_col').html('<textarea name="outputjson" id="outputjson" rows="32" cols="60"></textarea>');
-		$.ajax({
-			url: "rest/jsonformatter",
-			type: "POST",
-			data : inputJson,
-			contentType: 'application/json',
-			success: function(data) {
-				$('#outputjson').html(JSON.stringify(data));
-			},
-			error: function(jqXHR, exception) {
-				$('#outputjson').val(jqXHR.responseText);
-			}
-		})
-	});
 	
 	$('#treeview').click(function(){
         var data = $('#inputjson').val();
@@ -312,4 +263,5 @@ function setActiveTab(tabid) {
 	
 }
 </script>
+<script src="js/api.js"></script>
 </html>
