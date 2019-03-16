@@ -70,17 +70,36 @@ $("#comparebutton").click(function() {
 		})
 	});
 	
-	$('body').on('click','#convert',function(){
+	function getTimeZone() {
+		$.ajax({
+			url: "rest/dateservice/timezone",
+			type: "GET",
+			success: function(data) {
+				LeafProperties.time_zone = data.time_zone;
+			}
+		})
+	}
+	
+	$('body').on('click','#dateconvert',function(){
 		var milliseconds =  $('#milliseconds').val();
 		if(milliseconds == '')
             return;
+		var inputJson = {};
+		inputJson.milliseconds = milliseconds;
+		inputJson.local_time_zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		inputJson.user_time_zone = $('#timezone :selected').text();
+		var JSONString = JSON.stringify(inputJson);
 		$.ajax({
 			url: "rest/dateservice",
 			type: "POST",
-			data : milliseconds,
-			contentType: 'text/plain',
+			data : JSONString,
+			contentType: 'application/json',
 			success: function(data) {
-				$('#dateresult').html(data);
+				$('#dateresult').html(data.user_date);
+				$('#user_selected_tz').html(inputJson.user_time_zone);
+				$('#localtimezone').html(inputJson.local_time_zone);
+				$('#uct_dateresult').html(data.UTC_date);
+				$('#local_dateresult').html(data.local_date);
 			},
 			error: function(jqXHR, exception) {
 				$('#dateresult').val(jqXHR.responseText);

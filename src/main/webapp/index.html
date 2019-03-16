@@ -65,13 +65,25 @@
 <fieldset>
 	<label for="milliseconds">Milliseconds</label>
 	<input type="number" id="milliseconds" name="milliseconds" min="0" max="9999999999999" onclick="this.select();" class="w15" placeholder="Milliseconds (ms)">
-	  <span>
-	  <button class="button" id="convert">Convert To Date</button>
-  	</span>
+	<select id="timezone"></select>
+	  <div>
+	  <button class="button" id="dateconvert">Convert To Date</button>
+	  <button class="button" id="nowdateconvert">Now</button>
+  	</div>
 </fieldset>
-<br>
+<p><strong id="user_selected_tz"></strong></p>
 <div class="bgrs shadow rounded center" align="CENTER" title="Milliseconds to date result">
-<span id="dateresult" class="timestr">date time</span></div>
+<span id="dateresult" class="timestr">date time</span>
+</div>
+<p><strong id="localtimezone"></strong></p>
+<div class="bgrs shadow rounded center" align="CENTER" title="Milliseconds to date result">
+<span id="local_dateresult" class="timestr">date time</span>
+</div>
+<p><strong>UTC </strong>(Coordinated Universal Time)</p>
+<div class="bgrs shadow rounded center" align="CENTER" title="Milliseconds to date result">
+<span id="uct_dateresult" class="timestr">date time</span>
+</div>
+
 <small>Date from milliseconds (ms) since timestamp or unix epoch.</small>
 <h2>About Milliseconds to Date Converter</h2>
 <p><strong>Milliseconds to date converter</strong> helps you to find the date and time from a given total number of <strong>milliseconds</strong>.
@@ -135,7 +147,29 @@ and all lists are alphabetically ordered.
 	</font>
 </footer>
 <script>
+var LeafProperties = {};
 $(document).ready(function(){
+	function getTimeZone() {
+		$.ajax({
+			url: "rest/dateservice/timezone",
+			type: "GET",
+			async: false,
+			success: function(data) {
+				LeafProperties.time_zone = data.time_zone;
+			}
+		})
+	}
+	
+	
+	function setTimezone() {
+		$.each(LeafProperties.time_zone, function(key, value) {
+		    $('#timezone')
+		         .append($('<option>', { value : key })
+		         .text(value));
+		});
+	}
+	getTimeZone();
+	setTimezone();
 	$('textarea').each(function(){
         $(this).val($(this).val().trim());
     }
@@ -159,6 +193,11 @@ $(document).ready(function(){
         var target = '.root';
         jsonView.format(data, target);
     });
+	
+	$('#nowdateconvert').click(function() {
+		$('#milliseconds').val(Date.now());
+		$( "#dateconvert" ).trigger( "click" );
+	});
 	
 	$('#jsontocsv').click(function(){
         var data = $('#inputjson').val();
