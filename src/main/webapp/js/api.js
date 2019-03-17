@@ -129,3 +129,25 @@ $("#comparebutton").click(function() {
 			}
 		})
 	});
+	
+	$('body').on('click','#wordcounter',function(){
+		var sentence =  $('#countsentenece').val();
+		var action = $(this).val();
+		if(sentence == '')
+            return;
+		var inputJson = {};
+		inputJson.input_string = sentence;
+		var JSONString = JSON.stringify(inputJson);
+		$.ajax({
+			url: "rest/counter/sentence",
+			type: "POST",
+			data : JSONString,
+			contentType: 'application/json',
+			success: function(data) {
+				$('#countresult').html(data.word_count+" word "+data.char_count+" characters");
+			},
+			error: function(jqXHR, exception) {
+				$('#countresult').val(jqXHR.responseText);
+			}
+		})
+	});

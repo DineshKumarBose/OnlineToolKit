@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,4 +56,11 @@ public class UtilMethods {
 		return null;
 	}
 	
+	public static int countWordsUsingStringTokenizer(String sentence) { 
+		if (sentence == null || sentence.isEmpty()) {
+				return 0; 
+			} 
+			StringTokenizer tokens = new StringTokenizer(sentence); 
+			return tokens.countTokens(); 
+		}
 }

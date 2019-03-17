@@ -35,6 +35,7 @@
       <a href="#jsonviewer" class="menu" id="jsonviewer">JSON Viewer</a>
       <a href="#dateconverter" class="menu" id="dateconverter">DATE Converter</a>
       <a href="#encodedecode" class="menu" id="encodedecode">Param Encode/Decode</a>
+      <a href="#wordcounter" class="menu" id="wordcounter">Word Counter</a>
     </div>
   </div> 
 </div>
@@ -167,6 +168,23 @@ and all lists are alphabetically ordered.
 		<li><a href="http://www.w3.org/International/O-URL-code.html">URL encoding</a> with Java (UTF-8 character encoding, source code available)</li>
 	</ul>
 </div>
+
+<div style="padding-left:16px; display:none" class='container pagediv col-7' id='divwordcounter'>
+	<h2>Word Counter</h2>
+	<span class="info">Simply use the form below</span><br>
+	<br>
+	<div class="col-md-6">
+		<textarea class="" name="string" rows="20" cols="116" id="countsentenece" placeholder="Enter the text that you wish to find word and character count."></textarea>
+	</div>
+	<div class="bgrs shadow rounded center" align="CENTER" title="Date counter">
+		<span id="countresult" class="timestr">0 word o characters</span>
+	</div>
+	<br>
+	<div>
+		<button class="button" value="wordcounter" id="wordcounter" style="vertical-align: top;">Count</button>
+	</div>
+</div>
+
 <div style="padding-left:16px; display:none" class='pagediv' id='divjsoptimizer'>
  <form action="https://closure-compiler.appspot.com/compile" method="POST">
     <p>Type JavaScript code to optimize here:</p>
@@ -187,6 +205,7 @@ and all lists are alphabetically ordered.
   <a href="#jsonviewer" class='anchor' tab='jsonviewer'>JSON Viewer</a><br><br>
   <a href="#dateconverter" class='anchor' tab='dateconverter'>Milliseconds to date</a><br><br>
   <a href="#encodedecode" class='anchor' tab='encodedecode'>URL Param Encode/Decode</a><br><br>
+  <a href="#wordcounter" class='anchor' tab='wordcounter'>Word Counter</a><br><br>
 </div>
 </body>
 <footer>
