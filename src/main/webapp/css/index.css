@@ -4,8 +4,13 @@ body {
   color : #333333;
 }
 .w15 {
-	width: 40%
+	width: 45%
 }
+
+.w100 {
+	width: 102%
+}
+
 .shadow {
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .5)
 }
@@ -16,6 +21,10 @@ body {
 
 .col-7 {
 		width: 50.33%
+	}
+	
+.col-10 {
+		width: 100%
 	}
 
 .timestr {
