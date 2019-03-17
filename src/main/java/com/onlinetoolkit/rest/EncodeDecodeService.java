@@ -38,7 +38,7 @@ public class EncodeDecodeService {
 		JSONObject resJson = new JSONObject();
 		try {
 			JSONObject jsonObj = new JSONObject(jsonString);
-			resJson.put("EncodedURL", EncodeDecodeUrls(jsonObj.getString("url"), "encode"));
+			resJson.put("EncodedURL", EncodeDecodeUrls(jsonObj.getString("url"), "encode", jsonObj.getString("charset")));
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		} finally {
@@ -58,7 +58,7 @@ public class EncodeDecodeService {
 		JSONObject resJson = new JSONObject();
 		try {
 			JSONObject jsonObj = new JSONObject(jsonString);
-			resJson.put("EncodedURL", EncodeDecodeUrls(jsonObj.getString("url"), "decode"));
+			resJson.put("EncodedURL", EncodeDecodeUrls(jsonObj.getString("url"), "decode", jsonObj.getString("charset")));
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		} finally {
@@ -68,24 +68,23 @@ public class EncodeDecodeService {
 
 	}
 
-	public String EncodeDecodeUrls(String urlString, String type) {
+	public String EncodeDecodeUrls(String urlString, String type, String chareSet) {
 
 		String urlStr = "";
 		if ("".equalsIgnoreCase(urlString) || urlString == null)
 			return urlStr;
 
 		try {
-			URL url = null;
+			String url = null;
 			if ("encode".equalsIgnoreCase(type)) {
-				url = new URL(URLEncoder.encode(urlString, "UTF-8"));
+				url = URLEncoder.encode(urlString, chareSet);
 
 			} else if ("decode".equalsIgnoreCase(type)) {
-				url = new URL(URLDecoder.decode(urlString, "UTF-8"));
+				url = URLDecoder.decode(urlString, chareSet);
 			}
 			return url.toString();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, e.getMessage(), e);
 		}
 		return urlStr;
 

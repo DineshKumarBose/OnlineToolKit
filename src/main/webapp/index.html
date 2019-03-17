@@ -4,11 +4,11 @@
 <title>Online Kit</title>
 <meta name="google-site-verification" content="KYL-oUXLsTbGuvc1MkS5J1CxekS-z-KQGFSjnZes4sU" />
 <meta name="description" content="Online tool for software users and developers">
- <meta name="keywords" content="compare list, find duplicate, remove duplicates, leafsoft,comparelist,merge list,combine list, jsonviewer, jsontocsv, json validator, json minifier, milliseconds to date, date coverter, timezone">
+ <meta name="keywords" content="compare list, find duplicate, remove duplicates, leafsoft,comparelist,merge list,combine list, jsonviewer, jsontocsv, json validator, json minifier, milliseconds to date, date converter, timezone">
  <meta name="author" content="Dinesh Kumar">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="js/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <link rel="stylesheet" href="css/jsonview.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -26,7 +26,6 @@
 <body onload="loadhash()">
 <div class="navbar">
   <a class="active menu" href="#home" id='home'>Home</a>
-  <a href="#news" class="menu">News</a>
   <div class="dropdown">
     <button class="dropbtn">Tools 
       <i class="fa fa-caret-down"></i>
@@ -35,6 +34,7 @@
       <a href="#comparetool" class="menu" id="comparetool">Compare List</a>
       <a href="#jsonviewer" class="menu" id="jsonviewer">JSON Viewer</a>
       <a href="#dateconverter" class="menu" id="dateconverter">DATE Converter</a>
+      <a href="#encodedecode" class="menu" id="encodedecode">Param Encode/Decode</a>
     </div>
   </div> 
 </div>
@@ -58,8 +58,15 @@
   <span>
 	  <button class="button" id="comparebutton">Compare</button>
   </span>
+  <h2>Why use an online diff?</h2>
+  <div style="width: 500px;">
+  <p>In our course as a developer We find ourself constantly examining the differences between two pieces of text.
+</p>
+<p>Now, although pretty much every IDE (and various stand-alone products) have sophisticated diff utilities built in (like <a href="http://www.eclipse.org" target="eclipse">Eclipse</a>), my favourite,
+We got very tired of having to create two files just to paste in fragments of code or other bits of texts just in order to perform a diff and see the differences highlighted. </p>
 </div>
-<div style="padding-left:16px; display:none" class='container pagediv texteditor col-7' id='divdateconverter'>
+</div>
+<div style="padding-left:16px; display:none" class='container pagediv col-7' id='divdateconverter'>
 <h1>Milliseconds to Date Converter</h1>
 <p>Please enter the <strong>milliseconds</strong> number value to <strong>convert to date</strong> since timestamp or unix epoch.</p>
 <fieldset>
@@ -115,7 +122,7 @@ and all lists are alphabetically ordered.
   </span><br><br>
   <a href="#comparetool" class='anchor' tab='comparetool'>Compare two more lists</a><br><br>
 </div>
-<div style="padding-left:16px; display:none" class='pagediv texteditor' id='divjsonviewer'>
+<div style="padding-left:16px; display:none" class='pagediv' id='divjsonviewer'>
   <h2><b>JSON Viewer</b></h2>
   <table  border="1" class="">
   <thead>
@@ -133,12 +140,53 @@ and all lists are alphabetically ordered.
 	</tr>
 </tbody></table>
 </div>
+<div style="padding-left:16px; display:none" class='pagediv encode_decode' id='divencodedecode'>
+<h2>Encode/Decode URL Param</h2>
+<span class="info">Simply use the form below</span><br>
+<br>
+<div class="col-md-6">
+	<textarea class="" name="string" rows="20" cols="80" id="inputencdec" placeholder="Enter the param that you wish to encode or decode."></textarea>
+<div>
+<br>
+<select name="charset" id="toggle_text_charset">
+<option value="UTF-8" selected="selected">UTF-8</option>
+<option value="ASCII">ASCII</option>
+<option value="ISO-8859-1">ISO-8859-1</option>
+<option value="ISO-8859-2">ISO-8859-2</option>
+<option value="ISO-8859-6">ISO-8859-6</option>
+<option value="ISO-8859-15">ISO-8859-15</option>
+<option value="Windows-1252">Windows-1252</option>
+</select>
+</div>
+<button class="button encdecbutton" value="encode" style="vertical-align: top;">Encode Param</button>
+<button class="button encdecbutton" value="decode" style="vertical-align: top;">Decode Param</button>
+</div>
+<h4 class="page-header">External Links</h4>
+	<ul>
+		<li>More information about <a href="http://en.wikipedia.org/wiki/Percent-encoding">percent-encoding</a> (Wikipedia)</li>
+		<li><a href="http://www.w3.org/International/O-URL-code.html">URL encoding</a> with Java (UTF-8 character encoding, source code available)</li>
+	</ul>
+</div>
+<div style="padding-left:16px; display:none" class='pagediv' id='divjsoptimizer'>
+ <form action="https://closure-compiler.appspot.com/compile" method="POST">
+    <p>Type JavaScript code to optimize here:</p>
+    <textarea name="js_code" cols="50" rows="5">
+   
+    </textarea>
+    <input type="hidden" name="compilation_level" value="WHITESPACE_ONLY">
+    <input type="hidden" name="output_format" value="text">
+    <input type="hidden" name="output_info" value="compiled_code">
+    <br><br>
+    <input type="submit" value="Optimize">
+    </form>
+</div>
 <div style="padding-left:16px; display:none" class='pagediv' id='divhome'>
   <h2>Welcome</h2>
   LeafSoft is development center which produce online tools to reduce the users and developers time from day to day activities.<br> Here is our tools which will grow by nature.<br><br>
   <a href="#comparetool" class='anchor' tab='comparetool'>Compare two more lists</a><br><br>
   <a href="#jsonviewer" class='anchor' tab='jsonviewer'>JSON Viewer</a><br><br>
   <a href="#dateconverter" class='anchor' tab='dateconverter'>Milliseconds to date</a><br><br>
+  <a href="#encodedecode" class='anchor' tab='encodedecode'>URL Param Encode/Decode</a><br><br>
 </div>
 </body>
 <footer>
@@ -185,103 +233,6 @@ $(document).ready(function(){
 		setActiveTab(currentmenu);
 });
 	
-	
-	$('#treeview').click(function(){
-        var data = $('#inputjson').val();
-        if(data == '')
-            return;
-        $('#output_col').html('<td><div class="root"></div></td>');
-        var target = '.root';
-        jsonView.format(data, target);
-    });
-	
-	$('#nowdateconvert').click(function() {
-		$('#milliseconds').val(Date.now());
-		$( "#dateconvert" ).trigger( "click" );
-	});
-	
-	$('#jsontocsv').click(function(){
-        var data = $('#inputjson').val();
-        if(data == '')
-            return;
-        
-		JSONToCSVConvertor(data,"leafsoft",true);
-    });
-	
-	function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
-	    //If JSONData is not an object then JSON.parse will parse the JSON string in an Object
-	    var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;
-	    
-	    var CSV = '';    
-	    //Set Report title in first row or line
-	    
-	    CSV += ReportTitle + '\r\n\n';
-
-	    //This condition will generate the Label/Header
-	    if (ShowLabel) {
-	        var row = "";
-	        
-	        //This loop will extract the label from 1st index of on array
-	        for (var index in arrData[0]) {
-	            
-	            //Now convert each value to string and comma-seprated
-	            row += index + ',';
-	        }
-
-	        row = row.slice(0, -1);
-	        
-	        //append Label row with line break
-	        CSV += row + '\r\n';
-	    }
-	    
-	    //1st loop is to extract each row
-	    for (var i = 0; i < arrData.length; i++) {
-	        var row = "";
-	        
-	        //2nd loop will extract each column and convert it in string comma-seprated
-	        for (var index in arrData[i]) {
-	            row += '"' + arrData[i][index] + '",';
-	        }
-
-	        row.slice(0, row.length - 1);
-	        
-	        //add a line break after each row
-	        CSV += row + '\r\n';
-	    }
-
-	    if (CSV == '') {        
-	        alert("Invalid data");
-	        return;
-	    }   
-	    
-	    //Generate a file name
-	    var fileName = "MyReport_";
-	    //this will remove the blank-spaces from the title and replace it with an underscore
-	    fileName += ReportTitle.replace(/ /g,"_");   
-	    
-	    //Initialize file format you want csv or xls
-	    var uri = 'data:text/csv;charset=utf-8,' + escape(CSV);
-	    
-	    // Now the little tricky part.
-	    // you can use either>> window.open(uri);
-	    // but this will not work in some browsers
-	    // or you will not get the correct file extension    
-	    
-	    //this trick will generate a temp <a /> tag
-	    var link = document.createElement("a");    
-	    link.href = uri;
-	    
-	    //set the visibility hidden so it will not effect on your web-layout
-	    link.style = "visibility:hidden";
-	    link.download = fileName + ".csv";
-	    
-	    //this part will append the anchor tag and remove it after automatic click
-	    document.body.appendChild(link);
-	    link.click();
-	    document.body.removeChild(link);
-	}
-	
-	
 });
 function loadhash() {
 	var hash = location.hash.substr(1);
@@ -303,5 +254,6 @@ function setActiveTab(tabid) {
 	
 }
 </script>
+<script src="js/util.js"></script>
 <script src="js/api.js"></script>
 </html>

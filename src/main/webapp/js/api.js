@@ -106,3 +106,26 @@ $("#comparebutton").click(function() {
 			}
 		})
 	});
+	
+	$('body').on('click','.encdecbutton',function(){
+		var input_enc_dec =  $('#inputencdec').val();
+		var action = $(this).val();
+		if(input_enc_dec == '')
+            return;
+		var inputJson = {};
+		inputJson.url = input_enc_dec;
+		inputJson.charset = $('#toggle_text_charset :selected').text();
+		var JSONString = JSON.stringify(inputJson);
+		$.ajax({
+			url: "rest/encodedecodeservice/"+action,
+			type: "POST",
+			data : JSONString,
+			contentType: 'application/json',
+			success: function(data) {
+				$('#inputencdec').val(data.EncodedURL);
+			},
+			error: function(jqXHR, exception) {
+				$('#inputencdec').val(jqXHR.responseText);
+			}
+		})
+	});
